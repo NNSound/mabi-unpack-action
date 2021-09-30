@@ -1,0 +1,33 @@
+name: learn-github-actions
+on: [push]
+jobs:
+  unpack-tool:
+    runs-on: ubuntu-20.04
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          token: "${{ env.MY_ENV_VAR }}"
+          repository: regomne/mabi-pack
+          path: my-tools
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          token: "${{ env.MY_ENV_VAR }}"
+          toolchain: stable
+
+      # - name: curl
+      #   uses: wei/curl@master
+      #   with:
+      #     args: https://sh.rustup.rs -sSf | sh -y
+
+      - name: Run a one-line script
+        working-directory: ./my-tools
+        run: cargo build --release
+
+      - uses: actions-rs/cargo@v1
+        with:
+          token: "${{ env.MY_ENV_VAR }}"
+          # path: ./my-tools
+          command: build
+          args: --release 
