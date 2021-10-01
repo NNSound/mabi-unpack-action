@@ -28,6 +28,6 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           # token: "${{ env.MY_ENV_VAR }}"
-          working-directory: ./my-tools
+          # working-directory: ./my-tools
           command: build
-          args: --release 
+          args: --manifest-path ./my-tools/Cargo.toml --release 
