@@ -21,13 +21,13 @@ jobs:
       #   with:
       #     args: https://sh.rustup.rs -sSf | sh -y
 
-      - name: Run a one-line script
-        working-directory: ./my-tools
-        run: cargo build --release
+      # - name: Run a one-line script
+      #   # working-directory: ./my-tools
+      #   run: cargo build --release
 
       - uses: actions-rs/cargo@v1
         with:
           # token: "${{ env.MY_ENV_VAR }}"
-          path: ./my-tools/mabi-pack
+          # path: ./my-tools/mabi-pack
           command: build
           args: --release 
