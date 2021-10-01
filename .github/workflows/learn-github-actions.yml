@@ -7,13 +7,13 @@ jobs:
 
       - uses: actions/checkout@v2
         with:
-          token: "${{ env.MY_ENV_VAR }}"
+          # token: "${{ env.MY_ENV_VAR }}"
           repository: regomne/mabi-pack
           path: my-tools
 
       - uses: actions-rs/toolchain@v1
         with:
-          token: "${{ env.MY_ENV_VAR }}"
+          # token: "${{ env.MY_ENV_VAR }}"
           toolchain: stable
 
       # - name: curl
@@ -27,7 +27,7 @@ jobs:
 
       - uses: actions-rs/cargo@v1
         with:
-          token: "${{ env.MY_ENV_VAR }}"
+          # token: "${{ env.MY_ENV_VAR }}"
           # path: ./my-tools
           command: build
           args: --release 
