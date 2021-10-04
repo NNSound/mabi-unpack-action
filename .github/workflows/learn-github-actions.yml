@@ -35,6 +35,8 @@ jobs:
         # working-directory: ./my-tools
         run: mabi-pack --version
 
+      - uses: actions/checkout@v2
+      
       - name: unpack xml
         # working-directory: ./my-tools
         run: |
