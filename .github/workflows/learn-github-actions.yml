@@ -34,7 +34,7 @@ jobs:
 
       - name: export tool command
         # working-directory: ./my-tools
-        run: export "PATH=/home/runner/work/mabi-unpack-action/mabi-unpack-action/my-tools/target/release:$PATH"
+        run: echo "$GITHUB_WORKSPACE/my-tools/target/release" >> $GITHUB_PATH
 
       - name: test tool
         # working-directory: ./my-tools
