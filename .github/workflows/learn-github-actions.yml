@@ -8,19 +8,19 @@ jobs:
   unpack-tool:
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/checkout@v2
+
       - name: Get the version
         id: get_version
-        run: echo ::set-output name=RELEASE_VERSION::${GITHUB_REF/refs\/tags\//}
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
       - name: Set PACKFILE
-        run: echo "PACKFILE=$(find ./  -name *$RELEASE_VERSION.pack | sed 's/^\.\///g')" >> $GITHUB_ENV
+        run: echo "PACKFILE=$(find ./  -name *$342.pack | sed 's/^\.\///g')" >> $GITHUB_ENV
 
       - name: print env
         run: |
           echo $RELEASE_VERSION
           echo $PACKFILE
-
-      # - uses: actions/checkout@v2
 
       # - uses: actions/checkout@v2
       #   with:
