@@ -8,6 +8,13 @@ jobs:
   unpack-tool:
     runs-on: ubuntu-20.04
     steps:
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=RELEASE_VERSION::${GITHUB_REF/refs\/tags\/v/}
+
+      - name: Set PACKFILE
+        run: echo "PACKFILE=$(find ./  -name *$RELEASE_VERSION.pack | sed 's/^\.\///g')" >> $GITHUB_ENV
+
       - uses: actions/checkout@v2
 
       - uses: actions/checkout@v2
@@ -35,12 +42,6 @@ jobs:
       - name: test tool
         # working-directory: ./my-tools
         run: mabi-pack --version
-
-      - name: Set env
-        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/v*/}" >> $GITHUB_ENV
-
-      - name: Set PACKFILE
-        run: echo "PACKFILE=$(find ./  -name *$RELEASE_VERSION.pack | sed 's/^\.\///g')" >> $GITHUB_ENV
 
       - name: unpack xml
         # working-directory: ./my-tools
