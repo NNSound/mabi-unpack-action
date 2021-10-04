@@ -45,9 +45,11 @@ jobs:
           mabi-pack extract -i $GITHUB_WORKSPACE/341_to_342.pack -o $GITHUB_WORKSPACE/342 --filter "skillinfo.xml"
           mabi-pack extract -i $GITHUB_WORKSPACE/341_to_342.pack -o $GITHUB_WORKSPACE/342 --filter "propdb.xml"
 
-      - name: Build project # This would actually build your project, using zip for an example artifact
-        run: |
-          zip --junk-paths 342 $GITHUB_WORKSPACE/342
+      - uses: papeloto/action-zip@v1
+        with:
+          files: $GITHUB_WORKSPACE/342/
+          recursive: false
+          dest: 342.zip
 
       - name: Create Release
         id: create_release
