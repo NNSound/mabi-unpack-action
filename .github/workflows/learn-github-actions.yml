@@ -10,72 +10,77 @@ jobs:
     steps:
       - name: Get the version
         id: get_version
-        run: echo ::set-output name=RELEASE_VERSION::${GITHUB_REF/refs\/tags\/v/}
+        run: echo ::set-output name=RELEASE_VERSION::${GITHUB_REF/refs\/tags\//}
 
       - name: Set PACKFILE
         run: echo "PACKFILE=$(find ./  -name *$RELEASE_VERSION.pack | sed 's/^\.\///g')" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v2
-
-      - uses: actions/checkout@v2
-        with:
-          # token: "${{ env.MY_ENV_VAR }}"
-          repository: regomne/mabi-pack
-          path: my-tools
-
-      - uses: actions-rs/toolchain@v1
-        with:
-          # token: "${{ env.MY_ENV_VAR }}"
-          toolchain: stable
-
-      - uses: actions-rs/cargo@v1
-        with:
-          # token: "${{ env.MY_ENV_VAR }}"
-          # working-directory: ./my-tools
-          command: build
-          args: --manifest-path ./my-tools/Cargo.toml --release 
-
-      - name: export tool command
-        # working-directory: ./my-tools
-        run: echo "$GITHUB_WORKSPACE/my-tools/target/release" >> $GITHUB_PATH
-
-      - name: test tool
-        # working-directory: ./my-tools
-        run: mabi-pack --version
-
-      - name: unpack xml
-        # working-directory: ./my-tools
+      - name: print env
         run: |
-          mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION --filter "itemdb.xml"
-          mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION --filter "race.xml"
-          mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION --filter "production.xml"
-          mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION --filter "skillinfo.xml"
-          mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION --filter "propdb.xml"
+          echo $RELEASE_VERSION
+          echo $PACKFILE
 
-      - uses: papeloto/action-zip@v1
-        with:
-          files: $GITHUB_WORKSPACE/$RELEASE_VERSION/
-          recursive: false
-          dest: $RELEASE_VERSION.zip
+      # - uses: actions/checkout@v2
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
+      # - uses: actions/checkout@v2
+      #   with:
+      #     # token: "${{ env.MY_ENV_VAR }}"
+      #     repository: regomne/mabi-pack
+      #     path: my-tools
 
-      - name: Upload Release Asset
-        id: upload-release-asset 
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: $RELEASE_VERSION.zip
-          asset_name: $RELEASE_VERSION.zip
-          asset_content_type: application/zip
+      # - uses: actions-rs/toolchain@v1
+      #   with:
+      #     # token: "${{ env.MY_ENV_VAR }}"
+      #     toolchain: stable
+
+      # - uses: actions-rs/cargo@v1
+      #   with:
+      #     # token: "${{ env.MY_ENV_VAR }}"
+      #     # working-directory: ./my-tools
+      #     command: build
+      #     args: --manifest-path ./my-tools/Cargo.toml --release 
+
+      # - name: export tool command
+      #   # working-directory: ./my-tools
+      #   run: echo "$GITHUB_WORKSPACE/my-tools/target/release" >> $GITHUB_PATH
+
+      # - name: test tool
+      #   # working-directory: ./my-tools
+      #   run: mabi-pack --version
+
+      # - name: unpack xml
+      #   # working-directory: ./my-tools
+      #   run: |
+      #     mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION --filter "itemdb.xml"
+      #     mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION --filter "race.xml"
+      #     mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION --filter "production.xml"
+      #     mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION --filter "skillinfo.xml"
+      #     mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION --filter "propdb.xml"
+
+      # - uses: papeloto/action-zip@v1
+      #   with:
+      #     files: $GITHUB_WORKSPACE/$RELEASE_VERSION/
+      #     recursive: false
+      #     dest: $RELEASE_VERSION.zip
+
+      # - name: Create Release
+      #   id: create_release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: ${{ github.ref }}
+      #     release_name: Release ${{ github.ref }}
+      #     draft: false
+      #     prerelease: false
+
+      # - name: Upload Release Asset
+      #   id: upload-release-asset 
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+      #     asset_path: $RELEASE_VERSION.zip
+      #     asset_name: $RELEASE_VERSION.zip
+      #     asset_content_type: application/zip
