@@ -61,7 +61,7 @@ jobs:
         with:
           files:  ${{ env.GITHUB_WORKSPACE }}/${{ env.RELEASE_VERSION }}/
           recursive: false
-          dest: $RELEASE_VERSION.zip
+          dest: ${{ env.RELEASE_VERSION }}
 
       - name: Create Release
         id: create_release
