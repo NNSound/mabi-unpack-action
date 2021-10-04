@@ -34,7 +34,7 @@ jobs:
 
       - name: export tool command
         # working-directory: ./my-tools
-        run: export "PATH=$(pwd)/my-tools/target/release:$PATH"
+        run: export "PATH=/home/runner/work/mabi-unpack-action/mabi-unpack-action/my-tools/target/release:$PATH"
 
       - name: test tool
         # working-directory: ./my-tools
