@@ -31,3 +31,11 @@ jobs:
           # working-directory: ./my-tools
           command: build
           args: --manifest-path ./my-tools/Cargo.toml --release 
+
+      - name: export tool command
+        # working-directory: ./my-tools
+        run: export "PATH=$(pwd)/my-tools/target/release:$PATH"
+
+      - name: test tool
+        # working-directory: ./my-tools
+        run: mabi-pack --version
