@@ -51,11 +51,11 @@ jobs:
       - name: unpack xml
         # working-directory: ./my-tools
         run: |
-          mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION/db --filter "itemdb.xml"
-          mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION/db --filter "race.xml"
-          mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION/db --filter "production.xml"
-          mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION/db/skill --filter "skillinfo.xml"
-          mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION/db --filter "propdb.xml"
+          mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION --filter "itemdb.xml"
+          mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION --filter "race.xml"
+          mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION --filter "production.xml"
+          mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION --filter "skillinfo.xml"
+          mabi-pack extract -i $GITHUB_WORKSPACE/$PACKFILE -o $GITHUB_WORKSPACE/$RELEASE_VERSION --filter "propdb.xml"
 
       - uses: papeloto/action-zip@v1
         with:
